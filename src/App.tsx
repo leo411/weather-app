@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import soleil from './images/soleil_logo.png'
 import './App.css'
 import WeatherCard from './components/weather-card-container'
 import fakeData from './assets/weather-data.json'
+import Header from './components/header'
 
 export interface MainWeather {
     temp: number
@@ -41,9 +41,13 @@ export interface WeatherDay {
     sys: Sys
     dt_txt: string
 }
-// parseInt("2020-01-16 21:00:00".split(" ")[1].split(":")[0]) == 12
-//const time = parseInt("2020-01-16 21:00:00".split(" ")[1].split(":")[0]) == 12
-//const dayTime = time.filter(time=>time.result=12)
+
+function filterOnlyMidday(arrayToFilter: WeatherDay[]) {
+    return arrayToFilter.filter(
+        singlePoint =>
+            parseInt(singlePoint.dt_txt.split(' ')[1].split(':')[0]) === 12
+    )
+}
 
 const App: React.FC = () => {
     let [weatherWeekData, setWeatherWeekData] = useState<WeatherDay[]>()
@@ -56,28 +60,20 @@ const App: React.FC = () => {
                 return response.json()
             })
             .then(data => {
-                setWeatherWeekData(fakeData.list)
+                setWeatherWeekData(filterOnlyMidday(fakeData.list))
             })
     }, [])
-    console.log(weatherWeekData)
+
     return (
         <div className="App">
-            <div className="full-background"></div>
-            <img src={soleil} className="App-logo" alt="logo" />
-            <p className="App-text">Arcachon</p>
-            <a
-                className="App-link App-subtext"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Temps à Arcachon
-            </a>
-            {weatherWeekData && weatherWeekData.length > 0
-                ? weatherWeekData.map((weatherDayData: WeatherDay) => (
-                      <WeatherCard cardData={weatherDayData} />
-                  ))
-                : null}
+            <Header />
+            <div className="d-flex justify-content-center mt-3 ">
+                {weatherWeekData && weatherWeekData.length > 0
+                    ? weatherWeekData.map((weatherDayData: WeatherDay) => (
+                          <WeatherCard cardData={weatherDayData} />
+                      ))
+                    : null}
+            </div>
         </div>
     )
 }
