@@ -6,10 +6,10 @@ export const Header = () => {
     return (
         <div>
             <div className="full-background"></div>
-            <img src={soleil} className="App-logo" alt="logo" />
-            <p className="App-text">Arcachon</p>
+            <img src={soleil} className="header-logo" alt="logo" />
+            <p className="header-text">Arcachon</p>
             <a
-                className="App-link App-subtext"
+                className="header-link header-subtext"
                 href="https://reactjs.org"
                 target="_blank"
                 rel="noopener noreferrer"

@@ -11,16 +11,37 @@
     z-index: -1;
 }
 
-.App-text {
+.header-text {
     font-size: 1.75rem;
     font-weight: 900;
     letter-spacing: 0.2em;
 }
-.App-subtext {
+.header-subtext {
     font-size: 1.15rem;
     font-weight: 500;
 }
-.App-logo {
+.header-logo {
     height: 40vmin;
     pointer-events: none;
+}
+@keyframes header-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.header-link {
+    color: #646467;
+}
+.header-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .header-logo {
+        animation: header-logo-spin infinite 20s linear;
+    }
 }
