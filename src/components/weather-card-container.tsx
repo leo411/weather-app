@@ -8,7 +8,13 @@ export const WeatherCard = (props: { cardData: WeatherDay }) => {
         <div className="card-deck">
             <div className="card">
                 <div className="card-body">
-                    <h6 className="card-title">{cardData.dt_txt}</h6>
+                    <h6 className="card-title">
+                        {cardData.dt_js?.toLocaleDateString('fr-FR', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric'
+                        })}
+                    </h6>
                     <h5 className="card-title">{cardData.weather[0].main}</h5>
                     <p className="card-text">
                         Température minimum :

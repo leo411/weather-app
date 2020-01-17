@@ -40,12 +40,31 @@ export interface WeatherDay {
     wind: Wind
     sys: Sys
     dt_txt: string
+    dt_js?: Date
+}
+
+export interface City {
+    id: number
+    name: string
+    coord: { lat: number; lon: number }
+    country: string
+    population: number
+    timezone: number
+    sunrise: number
+    sunset: number
+}
+
+export interface DataFromAPI {
+    cod: string
+    message: number
+    cnt: number
+    list: WeatherDay[]
+    city: City
 }
 
 function filterOnlyMidday(arrayToFilter: WeatherDay[]) {
     return arrayToFilter.filter(
-        singlePoint =>
-            parseInt(singlePoint.dt_txt.split(' ')[1].split(':')[0]) === 12
+        (singlePoint: WeatherDay) => singlePoint.dt_js?.getHours() === 12
     )
 }
 
@@ -59,8 +78,16 @@ const App: React.FC = () => {
             .then(response => {
                 return response.json()
             })
-            .then(data => {
-                setWeatherWeekData(filterOnlyMidday(fakeData.list))
+            .then((data: DataFromAPI) => {
+                let typedData: DataFromAPI = fakeData
+                let dataWithDates: WeatherDay[] = typedData.list.map(
+                    (day: WeatherDay) => ({
+                        ...day,
+                        dt_js: new Date(day.dt_txt)
+                    })
+                )
+                console.log('DATAWITHDATES', dataWithDates)
+                setWeatherWeekData(filterOnlyMidday(dataWithDates))
             })
     }, [])
 
@@ -69,8 +96,8 @@ const App: React.FC = () => {
             <Header />
             <div className="d-flex justify-content-center mt-3 ">
                 {weatherWeekData && weatherWeekData.length > 0
-                    ? weatherWeekData.map((weatherDayData: WeatherDay) => (
-                          <WeatherCard cardData={weatherDayData} />
+                    ? weatherWeekData.map((weatherDayData: WeatherDay, i) => (
+                          <WeatherCard key={i} cardData={weatherDayData} />
                       ))
                     : null}
             </div>
