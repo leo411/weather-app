@@ -89,8 +89,8 @@ const App: React.FC = () => {
                 return response.json()
             })
             .then((data: DataFromAPI) => {
-                let typedData: DataFromAPI = fakeData
-                let dataWithDates: WeatherPoint[] = typedData.list.map(
+                // let typedData: DataFromAPI = fakeData
+                let dataWithDates: WeatherPoint[] = data.list.map(
                     (day: WeatherPoint) => ({
                         ...day,
                         dt_js: new Date(day.dt_txt)
