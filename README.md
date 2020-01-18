@@ -21,7 +21,7 @@ Pour des informations météorologiques plus précises de la journée je vous in
     <img alt="logoReact" src="./src/images/React_logo.png" />
 
 2.  **TypeScript**
-    <img alt="logoTypeScript" src="./src/images/logots.png" />
+    <img alt="logoTypeScript" src="./src/images/TypeScript_Logo.png" />
 
 3.  **Bootsrap**
     <img alt="logoBootsrap" src="./src/images/bootstrap-logo.png" />
