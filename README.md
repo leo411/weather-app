@@ -18,7 +18,7 @@ Pour des informations météorologiques plus précises de la journée je vous in
 ## Stack utilisé pour cette webapp 🍁🍁
 
 1.  **React Hooks**
-    <img alt="logoReact" src="./src/images/React_logo.png" />
+    <img alt="logoReact" src="./src/images/react-logo.png" />
 
 2.  **TypeScript**
     <img alt="logoTypeScript" src="./src/images/TypeScript_Logo.png" />
