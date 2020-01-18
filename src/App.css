@@ -12,3 +12,6 @@
     border-radius: 15px;
     color: #8acdf9;
 }
+.cursor-pointer {
+    cursor: pointer;
+}

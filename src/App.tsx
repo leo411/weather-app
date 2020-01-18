@@ -108,6 +108,7 @@ const App: React.FC = () => {
                     filterOnlyMidday(weatherData).map(
                         (weatherDayData: WeatherPoint, i) => (
                             <div
+                                className="cursor-pointer"
                                 onClick={() =>
                                     setSelectedDate(weatherDayData.dt_js)
                                 }
