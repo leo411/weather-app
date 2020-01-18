@@ -11,7 +11,7 @@ Bienvenue dans l'application météo d'Arcachon ☀️☀️
 <img alt="screesnhot" src="./src/images/screenshot5proj.jpg" />
 
 L'application météo d'Arcachon vous permet de visualiser la météo de la semaine de la ville.
-Pour des informations météorologiques plus précises de la journée je vous invite à cliquer sur chacune des cartes de la journée en question. 🏖️⛵🏄
+Pour des informations météorologiques plus précises de la journée je vous invite à cliquer sur chacune des cartes de la journée. 🏖️⛵🏄
 
 <img alt="screesnhot" src="./src/images/screenshotttejajournee.jpg" />
 
