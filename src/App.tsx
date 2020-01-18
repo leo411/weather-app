@@ -101,7 +101,8 @@ const App: React.FC = () => {
     }, [])
 
     return (
-        <div className="App">
+        <div className="app">
+            <div className="full-background"></div>
             <Header />
             {!selectedDate ? (
                 <div className="d-flex justify-content-around mt-3">
@@ -115,6 +116,7 @@ const App: React.FC = () => {
                             >
                                 <WeatherCard
                                     key={i}
+                                    showTime={false}
                                     cardData={weatherDayData}
                                 />
                             </div>
@@ -125,7 +127,7 @@ const App: React.FC = () => {
                 <div>
                     <button
                         type="button"
-                        className="header-subtext header-button"
+                        className="button-text header-button"
                         onClick={() => setSelectedDate(null)}
                     >
                         Retour
@@ -135,6 +137,7 @@ const App: React.FC = () => {
                             (weatherDayData: WeatherPoint, i) => (
                                 <WeatherCard
                                     key={i}
+                                    showTime={true}
                                     cardData={weatherDayData}
                                 />
                             )

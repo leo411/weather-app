@@ -41,8 +41,12 @@ let iconCodeToImage: { [key: string]: any } = {
     '50n': mistnight
 }
 
-export const WeatherCard = (props: { cardData: WeatherPoint }) => {
+export const WeatherCard = (props: {
+    cardData: WeatherPoint
+    showTime: boolean
+}) => {
     let cardData = props.cardData
+    let showTime = props.showTime
     return (
         <div className="card">
             <div className="card-body ">
@@ -53,6 +57,13 @@ export const WeatherCard = (props: { cardData: WeatherPoint }) => {
                         day: 'numeric'
                     })}
                 </h6>
+                {showTime ? (
+                    <h6 className="card-title">
+                        {cardData.dt_js?.toLocaleTimeString('fr-FR', {
+                            hour: 'numeric'
+                        })}
+                    </h6>
+                ) : null}
                 <img
                     src={iconCodeToImage[cardData.weather[0].icon]}
                     alt="icon meteo"

@@ -1,11 +1,16 @@
-.App {
+.app {
     text-align: center;
+    position: relative;
+    min-height: 100vh;
 }
 .header-subtext {
     font-size: 1.15rem;
     font-weight: 500;
 }
-
+.button-text {
+    font-size: 1.35rem;
+    font-weight: 500;
+}
 .header-button {
     background-color: #646467;
     border-color: #646467;
