@@ -103,9 +103,9 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <Header />
-            <div className="d-flex justify-content-center mt-3 ">
-                {!selectedDate ? (
-                    filterOnlyMidday(weatherData).map(
+            {!selectedDate ? (
+                <div className="d-flex justify-content-around mt-3">
+                    {filterOnlyMidday(weatherData).map(
                         (weatherDayData: WeatherPoint, i) => (
                             <div
                                 className="cursor-pointer"
@@ -119,29 +119,29 @@ const App: React.FC = () => {
                                 />
                             </div>
                         )
-                    )
-                ) : (
-                    <div>
-                        <button
-                            type="button"
-                            className="header-subtext header-button"
-                            onClick={() => setSelectedDate(null)}
-                        >
-                            Retour
-                        </button>
-                        <div className="d-flex justify-content-center mt-3 ">
-                            {filterByDate(weatherData, selectedDate).map(
-                                (weatherDayData: WeatherPoint, i) => (
-                                    <WeatherCard
-                                        key={i}
-                                        cardData={weatherDayData}
-                                    />
-                                )
-                            )}
-                        </div>
+                    )}
+                </div>
+            ) : (
+                <div>
+                    <button
+                        type="button"
+                        className="header-subtext header-button"
+                        onClick={() => setSelectedDate(null)}
+                    >
+                        Retour
+                    </button>
+                    <div className="d-flex mt-3 justify-content-around">
+                        {filterByDate(weatherData, selectedDate).map(
+                            (weatherDayData: WeatherPoint, i) => (
+                                <WeatherCard
+                                    key={i}
+                                    cardData={weatherDayData}
+                                />
+                            )
+                        )}
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     )
 }
