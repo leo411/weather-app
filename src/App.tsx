@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import WeatherCard from './components/weather-card-container'
+import WeatherCard from './components/weather-card'
 import fakeData from './assets/weather-data.json'
 import Header from './components/header'
-import DetailedWeatherData from './components/detailed-weather-data'
 
 export interface MainWeather {
     temp: number

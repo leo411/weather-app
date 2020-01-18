@@ -1,5 +1,5 @@
 import React from 'react'
-import './weather-card-container.css'
+import './weather-card.css'
 import { WeatherPoint } from '../App'
 
 export const WeatherCard = (props: { cardData: WeatherPoint }) => {
