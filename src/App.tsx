@@ -3,6 +3,7 @@ import './App.css'
 import WeatherCard from './components/weather-card-container'
 import fakeData from './assets/weather-data.json'
 import Header from './components/header'
+import DetailedWeatherData from './components/detailed-weather-data'
 
 export interface MainWeather {
     temp: number
@@ -32,7 +33,7 @@ export interface Wind {
 export interface Sys {
     pod: string
 }
-export interface WeatherDay {
+export interface WeatherPoint {
     dt: number
     main: MainWeather
     weather: Weather[]
@@ -58,18 +59,27 @@ export interface DataFromAPI {
     cod: string
     message: number
     cnt: number
-    list: WeatherDay[]
+    list: WeatherPoint[]
     city: City
 }
 
-function filterOnlyMidday(arrayToFilter: WeatherDay[]) {
+function filterOnlyMidday(arrayToFilter: WeatherPoint[] = []) {
     return arrayToFilter.filter(
-        (singlePoint: WeatherDay) => singlePoint.dt_js?.getHours() === 12
+        (singlePoint: WeatherPoint) => singlePoint.dt_js?.getHours() === 12
+    )
+}
+
+function filterByDate(arrayToFilter: WeatherPoint[] = [], datetime: Date) {
+    console.log('DATE TO FILTER BY', datetime)
+    return arrayToFilter.filter(
+        (singlePoint: WeatherPoint) =>
+            singlePoint.dt_js?.getDate() === datetime.getDate()
     )
 }
 
 const App: React.FC = () => {
-    let [weatherWeekData, setWeatherWeekData] = useState<WeatherDay[]>()
+    let [weatherData, setWeatherData] = useState<WeatherPoint[]>()
+    let [selectedDate, setSelectedDate] = useState<Date | null>()
 
     useEffect(() => {
         fetch(
@@ -80,14 +90,14 @@ const App: React.FC = () => {
             })
             .then((data: DataFromAPI) => {
                 let typedData: DataFromAPI = fakeData
-                let dataWithDates: WeatherDay[] = typedData.list.map(
-                    (day: WeatherDay) => ({
+                let dataWithDates: WeatherPoint[] = typedData.list.map(
+                    (day: WeatherPoint) => ({
                         ...day,
                         dt_js: new Date(day.dt_txt)
                     })
                 )
                 console.log('DATAWITHDATES', dataWithDates)
-                setWeatherWeekData(filterOnlyMidday(dataWithDates))
+                setWeatherData(dataWithDates)
             })
     }, [])
 
@@ -95,11 +105,42 @@ const App: React.FC = () => {
         <div className="App">
             <Header />
             <div className="d-flex justify-content-center mt-3 ">
-                {weatherWeekData && weatherWeekData.length > 0
-                    ? weatherWeekData.map((weatherDayData: WeatherDay, i) => (
-                          <WeatherCard key={i} cardData={weatherDayData} />
-                      ))
-                    : null}
+                {!selectedDate ? (
+                    filterOnlyMidday(weatherData).map(
+                        (weatherDayData: WeatherPoint, i) => (
+                            <div
+                                onClick={() =>
+                                    setSelectedDate(weatherDayData.dt_js)
+                                }
+                            >
+                                <WeatherCard
+                                    key={i}
+                                    cardData={weatherDayData}
+                                />
+                            </div>
+                        )
+                    )
+                ) : (
+                    <div>
+                        <button
+                            type="button"
+                            className="header-subtext header-button"
+                            onClick={() => setSelectedDate(null)}
+                        >
+                            Retour
+                        </button>
+                        <div className="d-flex justify-content-center mt-3 ">
+                            {filterByDate(weatherData, selectedDate).map(
+                                (weatherDayData: WeatherPoint, i) => (
+                                    <WeatherCard
+                                        key={i}
+                                        cardData={weatherDayData}
+                                    />
+                                )
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )

@@ -1,8 +1,8 @@
 import React from 'react'
 import './weather-card-container.css'
-import { WeatherDay } from '../App'
+import { WeatherPoint } from '../App'
 
-export const WeatherCard = (props: { cardData: WeatherDay }) => {
+export const WeatherCard = (props: { cardData: WeatherPoint }) => {
     let cardData = props.cardData
     return (
         <div className="card-deck">

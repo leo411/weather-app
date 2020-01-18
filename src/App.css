@@ -1,3 +1,14 @@
 .App {
     text-align: center;
 }
+.header-subtext {
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.header-button {
+    background-color: #646467;
+    border-color: #646467;
+    border-radius: 15px;
+    color: #8acdf9;
+}
