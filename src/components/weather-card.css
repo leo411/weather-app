@@ -1,3 +1,11 @@
 .card-body {
     background-color: #e3dabe;
 }
+.transform {
+    transform: scale(1);
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+.transform:hover {
+    transform: scale(1.04);
+}

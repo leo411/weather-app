@@ -80,10 +80,11 @@ const App: React.FC = () => {
     let [weatherData, setWeatherData] = useState<WeatherPoint[]>()
     let [selectedDate, setSelectedDate] = useState<Date | null>()
 
+    let apiEndpoint =
+        'http://api.openweathermap.org/data/2.5/forecast?q=arcachon,fr&units=metric&appid=10a1b8209d01a059e09e70c7468cd694'
+
     useEffect(() => {
-        fetch(
-            'http://api.openweathermap.org/data/2.5/forecast?q=arcachon,fr&units=metric&appid=10a1b8209d01a059e09e70c7468cd694'
-        )
+        fetch(apiEndpoint)
             .then(response => {
                 return response.json()
             })
@@ -98,12 +99,12 @@ const App: React.FC = () => {
                 console.log('DATAWITHDATES', dataWithDates)
                 setWeatherData(dataWithDates)
             })
-    }, [])
+    }, [apiEndpoint])
 
     return (
         <div className="app">
             <div className="full-background"></div>
-            <Header />
+            <Header showDayDetail={selectedDate ? true : false} />
             {!selectedDate ? (
                 <div className="d-flex justify-content-around mt-3">
                     {filterOnlyMidday(weatherData).map(
@@ -127,7 +128,7 @@ const App: React.FC = () => {
                 <div>
                     <button
                         type="button"
-                        className="button-text header-button"
+                        className="button-text header-button transform"
                         onClick={() => setSelectedDate(null)}
                     >
                         Retour
