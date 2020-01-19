@@ -48,7 +48,7 @@ export const WeatherCard = (props: {
     let cardData = props.cardData
     let showTime = props.showTime
     return (
-        <div className="card transform m-3">
+        <div className="card transform my-3">
             <div className="card-body ">
                 <h6 className="card-title">
                     {cardData.dt_js?.toLocaleDateString('fr-FR', {

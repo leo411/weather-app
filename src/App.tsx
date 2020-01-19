@@ -80,7 +80,7 @@ const App: React.FC = () => {
     let [selectedDate, setSelectedDate] = useState<Date | null>()
 
     let apiEndpoint =
-        'http://api.openweathermap.org/data/2.5/forecast?q=arcachon,fr&units=metric&appid=10a1b8209d01a059e09e70c7468cd694'
+        'https://api.openweathermap.org/data/2.5/forecast?q=arcachon,fr&units=metric&appid=10a1b8209d01a059e09e70c7468cd694'
 
     useEffect(() => {
         fetch(apiEndpoint)

@@ -1,8 +1,7 @@
 @font-face {
-    font-family: 'Cinzel';
-    src: url('./assets/Cinzel/Cinzel-Black.ttf');
+    font-family: 'Lato';
+    src: url('./assets/Lato/Lato-Italic.ttf');
 }
-
 body {
-    font-family: 'Cinzel';
+    font-family: 'Lato', sans-serif !important;
 }
