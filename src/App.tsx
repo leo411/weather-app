@@ -68,7 +68,6 @@ function filterOnlyMidday(arrayToFilter: WeatherPoint[] = []) {
 }
 
 function filterByDate(arrayToFilter: WeatherPoint[] = [], datetime: Date) {
-    console.log('DATE TO FILTER BY', datetime)
     return arrayToFilter.filter(
         (singlePoint: WeatherPoint) =>
             singlePoint.dt_js?.getDate() === datetime.getDate()
@@ -94,7 +93,6 @@ const App: React.FC = () => {
                         dt_js: new Date(day.dt_txt)
                     })
                 )
-                console.log('DATAWITHDATES', dataWithDates)
                 setWeatherData(dataWithDates)
             })
     }, [apiEndpoint])
