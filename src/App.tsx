@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import WeatherCard from './components/weather-card'
-import fakeData from './assets/weather-data.json'
 import Header from './components/header'
 
 export interface MainWeather {
@@ -89,7 +88,6 @@ const App: React.FC = () => {
                 return response.json()
             })
             .then((data: DataFromAPI) => {
-                // let typedData: DataFromAPI = fakeData
                 let dataWithDates: WeatherPoint[] = data.list.map(
                     (day: WeatherPoint) => ({
                         ...day,
@@ -106,11 +104,11 @@ const App: React.FC = () => {
             <div className="full-background"></div>
             <Header showDayDetail={selectedDate ? true : false} />
             {!selectedDate ? (
-                <div className="d-flex justify-content-around mt-3">
+                <div className="d-flex justify-content-around mt-3 flex-wrap">
                     {filterOnlyMidday(weatherData).map(
                         (weatherDayData: WeatherPoint, i) => (
                             <div
-                                className="cursor-pointer"
+                                className="cursor-pointer m-3"
                                 onClick={() =>
                                     setSelectedDate(weatherDayData.dt_js)
                                 }
@@ -133,7 +131,7 @@ const App: React.FC = () => {
                     >
                         Retour
                     </button>
-                    <div className="d-flex mt-3 justify-content-around">
+                    <div className="d-flex mt-3 justify-content-around flex-wrap">
                         {filterByDate(weatherData, selectedDate).map(
                             (weatherDayData: WeatherPoint, i) => (
                                 <WeatherCard

@@ -20,6 +20,18 @@
     font-size: 2.15rem;
     font-weight: 500;
 }
+@media (max-width: 550px) {
+    .header-text {
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+    }
+    .header-subtext {
+        font-size: 1rem;
+        font-weight: 400;
+    }
+}
+
 .header-logo {
     height: 40vmin;
     pointer-events: none;
