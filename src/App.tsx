@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './App.css'
 import WeatherCard from './components/weather-card'
 import Header from './components/header'
+import SearchBar from './components/search-bar'
 
 export interface MainWeather {
     temp: number
@@ -77,12 +78,12 @@ function filterByDate(arrayToFilter: WeatherPoint[] = [], datetime: Date) {
 const App: React.FC = () => {
     let [weatherData, setWeatherData] = useState<WeatherPoint[]>()
     let [selectedDate, setSelectedDate] = useState<Date | null>()
-
-    let apiEndpoint =
-        'https://api.openweathermap.org/data/2.5/forecast?q=arcachon,fr&units=metric&appid=10a1b8209d01a059e09e70c7468cd694'
+    let [selectedAddress, setselectedAddress] = useState<string>('Arcachon')
 
     useEffect(() => {
-        fetch(apiEndpoint)
+        fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${selectedAddress}&units=metric&appid=10a1b8209d01a059e09e70c7468cd694`
+        )
             .then(response => {
                 return response.json()
             })
@@ -95,11 +96,13 @@ const App: React.FC = () => {
                 )
                 setWeatherData(dataWithDates)
             })
-    }, [apiEndpoint])
+    }, [selectedAddress])
 
     return (
         <div className="app">
             <div className="full-background"></div>
+            <SearchBar addressSetter={setselectedAddress} />
+            {selectedAddress}
             <Header showDayDetail={selectedDate ? true : false} />
             {!selectedDate ? (
                 <div className="d-flex justify-content-around mt-3 flex-wrap">
