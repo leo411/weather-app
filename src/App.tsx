@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './App.css'
 import WeatherCard from './components/weather-card'
 import Header from './components/header'
+import SearchBar from './components/search-bar'
 
 export interface MainWeather {
     temp: number
@@ -77,71 +78,88 @@ function filterByDate(arrayToFilter: WeatherPoint[] = [], datetime: Date) {
 const App: React.FC = () => {
     let [weatherData, setWeatherData] = useState<WeatherPoint[]>()
     let [selectedDate, setSelectedDate] = useState<Date | null>()
-
-    let apiEndpoint =
-        'https://api.openweathermap.org/data/2.5/forecast?q=arcachon,fr&units=metric&appid=10a1b8209d01a059e09e70c7468cd694'
+    let [selectedAddress, setselectedAddress] = useState<string>()
 
     useEffect(() => {
-        fetch(apiEndpoint)
-            .then(response => {
-                return response.json()
-            })
-            .then((data: DataFromAPI) => {
-                let dataWithDates: WeatherPoint[] = data.list.map(
-                    (day: WeatherPoint) => ({
-                        ...day,
-                        dt_js: new Date(day.dt_txt)
-                    })
-                )
-                setWeatherData(dataWithDates)
-            })
-    }, [apiEndpoint])
+        if (selectedAddress) {
+            fetch(
+                `https://api.openweathermap.org/data/2.5/forecast?q=${selectedAddress}&units=metric&appid=10a1b8209d01a059e09e70c7468cd694`
+            )
+                .then(response => {
+                    return response.json()
+                })
+                .then((data: DataFromAPI) => {
+                    if (data.list) {
+                        let dataWithDates: WeatherPoint[] = data.list.map(
+                            (day: WeatherPoint) => ({
+                                ...day,
+                                dt_js: new Date(day.dt_txt)
+                            })
+                        )
+                        setWeatherData(dataWithDates)
+                    } else {
+                        alert('City not found, please try again')
+                    }
+                })
+        }
+    }, [selectedAddress])
 
     return (
-        <div className="app">
+        <div className="app d-flex flex-column justify-content-center align-items-center">
             <div className="full-background"></div>
-            <Header showDayDetail={selectedDate ? true : false} />
-            {!selectedDate ? (
-                <div className="d-flex justify-content-around mt-3 flex-wrap">
-                    {filterOnlyMidday(weatherData).map(
-                        (weatherDayData: WeatherPoint, i) => (
-                            <div
-                                className="cursor-pointer m-3"
-                                onClick={() =>
-                                    setSelectedDate(weatherDayData.dt_js)
-                                }
+            <SearchBar addressSetter={setselectedAddress} />
+            {selectedAddress ? (
+                <div>
+                    <Header
+                        showDayDetail={selectedDate ? true : false}
+                        selectedAddress={selectedAddress}
+                    />
+
+                    {!selectedDate ? (
+                        <div className="d-flex justify-content-around mt-3 flex-wrap">
+                            {filterOnlyMidday(weatherData).map(
+                                (weatherDayData: WeatherPoint, i) => (
+                                    <div
+                                        className="cursor-pointer m-3"
+                                        onClick={() =>
+                                            setSelectedDate(
+                                                weatherDayData.dt_js
+                                            )
+                                        }
+                                    >
+                                        <WeatherCard
+                                            key={i}
+                                            showTime={false}
+                                            cardData={weatherDayData}
+                                        />
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    ) : (
+                        <div>
+                            <button
+                                type="button"
+                                className="button-text header-button transform"
+                                onClick={() => setSelectedDate(null)}
                             >
-                                <WeatherCard
-                                    key={i}
-                                    showTime={false}
-                                    cardData={weatherDayData}
-                                />
+                                Retour
+                            </button>
+                            <div className="d-flex mt-3 justify-content-around flex-wrap">
+                                {filterByDate(weatherData, selectedDate).map(
+                                    (weatherDayData: WeatherPoint, i) => (
+                                        <WeatherCard
+                                            key={i}
+                                            showTime={true}
+                                            cardData={weatherDayData}
+                                        />
+                                    )
+                                )}
                             </div>
-                        )
+                        </div>
                     )}
                 </div>
-            ) : (
-                <div>
-                    <button
-                        type="button"
-                        className="button-text header-button transform"
-                        onClick={() => setSelectedDate(null)}
-                    >
-                        Retour
-                    </button>
-                    <div className="d-flex mt-3 justify-content-around flex-wrap">
-                        {filterByDate(weatherData, selectedDate).map(
-                            (weatherDayData: WeatherPoint, i) => (
-                                <WeatherCard
-                                    key={i}
-                                    showTime={true}
-                                    cardData={weatherDayData}
-                                />
-                            )
-                        )}
-                    </div>
-                </div>
-            )}
+            ) : null}
         </div>
     )
 }

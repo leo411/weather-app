@@ -1,0 +1,27 @@
+.searchbar {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.searchbar:hover {
+    background-color: #ddd;
+    color: black;
+}
+.dropdownlist {
+    background-color: #ffffff;
+    color: #000000;
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    left: 0px;
+    right: 0;
+    top: 100%;
+    z-index: 1;
+}
+.citysuggestion:hover {
+    background-color: #d2cece;
+}
