@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { City } from '../App'
 import './search-bar.css'
 
 export interface Geometry {
@@ -47,13 +46,13 @@ const SearchBar = (props: { addressSetter: Function }) => {
     useEffect(() => {
         fetch(`https://api-adresse.data.gouv.fr/search/?q=${cityInput}`)
             .then(response => response.json())
-            .then(jsonResponse =>
+            .then(jsonResponse => {
                 setAddressRecommandations(jsonResponse.features)
-            )
+            })
     }, [cityInput])
 
     return (
-        <div>
+        <div style={{ position: 'relative', minWidth: '500px' }}>
             <form>
                 <input
                     type="text"
@@ -61,17 +60,17 @@ const SearchBar = (props: { addressSetter: Function }) => {
                     placeholder="enter a city"
                     onChange={e => setCityInput(e.target.value)}
                     className="searchbar"
+                    style={{ width: '100%' }}
                 />
             </form>
-            {cityInput}
-            <ul>
+            <ul className="dropdownlist">
                 {addressRecommandations.map(addressRecommandation => (
                     <li
-                        onClick={() =>
-                            addressSetter(
-                                addressRecommandation.properties.label
-                            )
-                        }
+                        className="citysuggestion"
+                        onClick={() => {
+                            addressSetter(addressRecommandation.properties.city)
+                            setAddressRecommandations([])
+                        }}
                     >
                         {addressRecommandation.properties.label}
                     </li>
